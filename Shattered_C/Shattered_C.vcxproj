@@ -20,13 +20,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Chunk.c" />
+    <ClCompile Include="Source\Debug.c" />
     <ClCompile Include="Source\Main.c" />
     <ClCompile Include="Source\Memory.c" />
+    <ClCompile Include="Source\Value.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Chunk.h" />
     <ClInclude Include="Source\Common.h" />
+    <ClInclude Include="Source\Debug.h" />
     <ClInclude Include="Source\Memory.h" />
+    <ClInclude Include="Source\Value.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

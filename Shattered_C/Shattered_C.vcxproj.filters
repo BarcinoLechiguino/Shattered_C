@@ -24,6 +24,12 @@
     <ClCompile Include="Source\Memory.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Debug.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Value.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Chunk.h">
@@ -33,6 +39,12 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Memory.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Debug.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Value.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

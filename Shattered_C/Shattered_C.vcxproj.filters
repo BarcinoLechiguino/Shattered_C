@@ -15,10 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Chunk.c">
+    <ClCompile Include="Source\Main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Main.c">
+    <ClCompile Include="Source\Chunk.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Memory.c">
@@ -32,10 +32,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Chunk.h">
+    <ClInclude Include="Source\Common.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Common.h">
+    <ClInclude Include="Source\Chunk.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Memory.h">

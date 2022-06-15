@@ -1,13 +1,14 @@
 #include <stdio.h>
 
 #include "Value.h"
+
 #include "Debug.h"
 
 void DisassembleChunk(Chunk* chunk, const char* name)
 {
 	printf("== %s ==\n", name);
 
-	for (int offset = 0; offset < chunk->count;)					// offset is not incremented in the loop as instructions can have varying sizes.
+	for (int offset = 0; offset < chunk->count;)
 	{
 		offset = DisassembleInstruction(chunk, offset);
 	}
@@ -16,7 +17,7 @@ void DisassembleChunk(Chunk* chunk, const char* name)
 int DisassembleInstruction(Chunk* chunk, int offset)
 {
 	printf("%04d ", offset);
-	
+
 	if (offset > 0 && chunk->lines[offset] == chunk->lines[offset - 1])
 	{
 		printf("   | ");
@@ -29,27 +30,32 @@ int DisassembleInstruction(Chunk* chunk, int offset)
 	uint8_t instruction = chunk->code[offset];
 	switch (instruction)
 	{
-		case OP_CONSTANT:	{ return ConstantInstruction("OP_CONSTANT", chunk, offset); }	break;
-		case OP_RETURN:		{ return SimpleInstruction("OP_RETURN", offset); }				break;
-		default: 
-			printf("Unknown opcode %d\n", instruction); 
-			return offset + 1;	
-		break;
+	case OP_CONSTANT:		{ return ConstantInstruction("OP_CONSTANT", chunk, offset); }		break;
+	case OP_CONSTANT_LONG:	{ return ConstantInstruction("OP_CONSTANT_LONG", chunk, offset); }	break;
+	case OP_RETURN:			{ return SimpleInstruction("OP_RETURN", offset); }					break;
+	default:				{ return DefaultInstruction(instruction, offset); }					break;
 	}
+}
+
+static int ConstantInstruction(const char* name, Chunk* chunk, int offset)
+{
+	int constantIdx = chunk->code[offset + 1];														// Getting the index of the constant in the chunk's constants ValueArray.
+
+	printf("%-16s %4d '", name, constantIdx);
+	PrintValue(chunk->constants.values[constantIdx]);												// Getting the actual value with the constantIdx.
+	printf("'\n");
+
+	return (offset + ((chunk->code[offset] == OP_CONSTANT) ? 2 : 4));								// +2 since there are 2 bytes assigned to the OP_CONSTANT operation.
 }
 
 static int SimpleInstruction(const char* name, int offset)
 {
 	printf("%s\n", name);
-	return offset + 1;															// offset + 1 so we go to the next byte, which contains the next instruction.
+	return (offset + 1);
 }
 
-static int ConstantInstruction(const char* name, Chunk* chunk, int offset)
+static int DefaultInstruction(uint8_t instruction, int offset)
 {
-	uint8_t idx = chunk->code[offset + 1];										// offset + 1 so we go to the byte that contains the idx.
-	printf("%-16s %4d '", name, idx);
-	PrintValue(chunk->constants.values[idx]);
-	printf("'\n");
-
-	return offset + 2;															// offset + 2 so we go to the next byte, which contains the next instruction.
+	printf("Unknown OP_CODE: %d\n", instruction);
+	return (offset + 1);
 }

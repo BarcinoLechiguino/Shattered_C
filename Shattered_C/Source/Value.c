@@ -1,30 +1,31 @@
 #include "Memory.h"
+
 #include "Value.h"
 
-void InitValueArray(ValueArray* v_array)
+void InitValueArray(ValueArray* valArray)
 {
-	v_array->capacity	= 0;
-	v_array->count		= 0;
-	v_array->values		= NULL;
+	valArray->capacity	= 0;
+	valArray->count		= 0;
+	valArray->values	= NULL;
 }
 
-void FreeValueArray(ValueArray* v_array)
+void FreeValueArray(ValueArray* valArray)
 {
-	FREE_ARRAY(Value, v_array->values, v_array->capacity);
-	InitValueArray(v_array);
+	FREE_ARRAY(Value, valArray->values, valArray->capacity);
+	InitValueArray(valArray);
 }
 
-void WriteValueArray(ValueArray* v_array, Value value)
+void WriteValueArray(ValueArray* valArray, Value value)
 {
-	if (v_array->capacity < v_array->count + 1)
+	if (valArray->capacity < valArray->count + 1)
 	{
-		int old_capacity	= v_array->capacity;
-		v_array->capacity	= EXPAND_CAPACITY(old_capacity);
-		v_array->values		= EXPAND_ARRAY(Value, v_array->values, old_capacity, v_array->capacity);
+		int oldCapacity = valArray->capacity;
+		valArray->capacity	= GROW_CAPACITY(oldCapacity);
+		valArray->values	= GROW_ARRAY(Value, valArray->values, oldCapacity, valArray->capacity));		// Why does it need the second ')' at the end?
 	}
 
-	v_array->values[v_array->count] = value;
-	++v_array->count;
+	valArray->values[valArray->count] = value;
+	++valArray->count;
 }
 
 void PrintValue(Value value)

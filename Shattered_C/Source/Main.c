@@ -2,20 +2,16 @@
 #include "Chunk.h"
 #include "Debug.h"
 
-int main(int argc, char** argv)
-{	
+int main(int argc, const char* argv[])
+{
 	Chunk chunk;
-
+	
 	InitChunk(&chunk);
+	
+	WriteConstant(&chunk, 1.2, 123);
+	WriteChunk(&chunk, OP_RETURN, 123);									// Writting a Return operation
 
-	int constant = AddConstant(&chunk, 1.2);							// Idx of the constant in the chunk's constants ValueArray.
-	WriteChunk(&chunk, OP_CONSTANT, 123);								// Appending the opcode for the added constant to the chunk's code array.
-	WriteChunk(&chunk, constant, 123);									// Appending the idx of the constant to the chunk's code array.
-
-	WriteChunk(&chunk, OP_RETURN, 123);
-
-	DisassembleChunk(&chunk, "test chunk");
-
+	DisassembleChunk(&chunk, "test_chunk");
 	FreeChunk(&chunk);
 	
 	return 0;

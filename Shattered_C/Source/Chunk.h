@@ -4,25 +4,27 @@
 #include "Common.h"
 #include "Value.h"
 
-typedef enum
+typedef enum										// Number that controls what kind of instruction is being dealt with.
 {
-	OP_CONSTANT,											// Produces a particular constant.
-	OP_RETURN,												// Return from the current function.
+	OP_CONSTANT,									// OP_CODE 0: Produce a particular constant. Operand is 1 byte long	(256 max)
+	OP_CONSTANT_LONG,								// OP_CODE 1: Produce a particular constant. Operand is 3 bytes long (16777216 max)
+	OP_RETURN,										// OP_CODE 2: Return from current function.
 } OP_CODE;
 
-typedef struct 												// Will store the instructions' data.
+typedef struct
 {
-	int			count;										// Amount of elements in use in the array.
-	int			capacity;									// Amount of elements allocated in the array.
-	uint8_t*	code;										// Dynamic array that stores the chunk's bytecode.
-	int*		lines;										// Dynamic array that parallels the code array and that stores the line of the source code the byte in the bytecode was written in.
-	ValueArray	constants;									// Dynamic array that stores the chunk's constants.
+	int			capacity;							// Total elements allocated.
+	int			count;								// Total entries in use.
+	uint8_t*	code;								// Bytecode.
+	int*		lines;								// Line information.
+	ValueArray	constants;							// Constant values.
 } Chunk;
 
-void InitChunk	(Chunk* chunk);								// Initializes the chunk's variables.
-void FreeChunk	(Chunk* chunk);								// Frees the memory allocated to the given Chunk.
-void WriteChunk	(Chunk* chunk, uint8_t byte, int line);		// Appends the given byte to the end of the Chunk's array.
-int  AddConstant(Chunk* chunk, Value value);				// Appends the given value to the end of the Chunk's constants array.
+void InitChunk	(Chunk* chunk);
+void FreeChunk	(Chunk* chunk);
+void WriteChunk	(Chunk* chunk, uint8_t byte, int line);
+
+void WriteConstant(Chunk* chunk, Value value, int line);
+int  AddConstant(Chunk* chunk, Value value);
 
 #endif // !__Ç_CHUNK_H__
-

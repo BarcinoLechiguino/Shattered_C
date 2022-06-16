@@ -8,7 +8,14 @@ typedef enum										// Number that controls what kind of instruction is being 
 {
 	OP_CONSTANT,									// OP_CODE 0: Produce a particular constant. Operand is 1 byte long	(256 max)
 	OP_CONSTANT_LONG,								// OP_CODE 1: Produce a particular constant. Operand is 3 bytes long (16777216 max)
-	OP_RETURN,										// OP_CODE 2: Return from current function.
+	
+	OP_ADD,											// OP_CODE 2: Apply the addition binary operation of two particular constants.
+	OP_SUBTRACT,									// OP_CODE 3: Apply the subtraction binary operation of two particular constants.
+	OP_MULTIPLY,									// OP_CODE 4: Apply the multiplication binary operation of two particular constants.
+	OP_DIVIDE,										// OP_CODE 5: Apply the division binary operation of two particular constants.
+	OP_NEGATE,										// OP_CODE 6: Apply the unary negation of a particular constant.
+	
+	OP_RETURN,										// OP_CODE 7: Return from current function.
 } OP_CODE;
 
 typedef struct

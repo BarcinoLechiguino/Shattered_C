@@ -70,6 +70,14 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>.\Build</OutDir>
+    <IntDir>.\Intermediate</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>.\Build</OutDir>
+    <IntDir>.\Intermediate</IntDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -131,14 +139,18 @@
     <ClCompile Include="Source\Debug.c" />
     <ClCompile Include="Source\Main.c" />
     <ClCompile Include="Source\Memory.c" />
+    <ClCompile Include="Source\Stack.c" />
     <ClCompile Include="Source\Value.c" />
+    <ClCompile Include="Source\VM.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Chunk.h" />
     <ClInclude Include="Source\Common.h" />
     <ClInclude Include="Source\Debug.h" />
     <ClInclude Include="Source\Memory.h" />
+    <ClInclude Include="Source\Stack.h" />
     <ClInclude Include="Source\Value.h" />
+    <ClInclude Include="Source\VM.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

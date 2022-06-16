@@ -32,6 +32,11 @@ int DisassembleInstruction(Chunk* chunk, int offset)
 	{
 	case OP_CONSTANT:		{ return ConstantInstruction("OP_CONSTANT", chunk, offset); }			break;
 	case OP_CONSTANT_LONG:	{ return ConstantLongInstruction("OP_CONSTANT_LONG", chunk, offset); }	break;
+	case OP_ADD:			{ return SimpleInstruction("OP_ADD", offset); }							break;
+	case OP_SUBTRACT:		{ return SimpleInstruction("OP_SUBTRACT", offset); }					break;
+	case OP_MULTIPLY:		{ return SimpleInstruction("OP_MULTIPLY", offset); }					break;
+	case OP_DIVIDE:			{ return SimpleInstruction("OP_DIVIDE", offset); }						break;
+	case OP_NEGATE:			{ return SimpleInstruction("OP_NEGATE", offset); }						break;
 	case OP_RETURN:			{ return SimpleInstruction("OP_RETURN", offset); }						break;
 	default:				{ return DefaultInstruction(instruction, offset); }						break;
 	}

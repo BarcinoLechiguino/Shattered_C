@@ -13,16 +13,16 @@ int main(int argc, const char* argv[])
 
 	// a + (b * c) - (d / (-e))
 	WriteConstant(&chunk, 1, 123);
-	
+
 	WriteConstant(&chunk, 2, 123);
 	WriteConstant(&chunk, 3, 123);
 	WriteChunk(&chunk, OP_MULTIPLY, 123);
-	
+
 	WriteConstant(&chunk, 4, 123);
 	WriteConstant(&chunk, 5, 123);
 	WriteChunk(&chunk, OP_NEGATE, 123);
 	WriteChunk(&chunk, OP_DIVIDE, 123);
-	
+
 	WriteChunk(&chunk, OP_SUBTRACT, 123);
 	WriteChunk(&chunk, OP_ADD, 123);
 

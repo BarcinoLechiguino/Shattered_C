@@ -33,7 +33,7 @@
     <ClCompile Include="Source\VM.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Stack.c">
+    <ClCompile Include="Source\VM_Stack.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,7 +56,7 @@
     <ClInclude Include="Source\VM.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Stack.h">
+    <ClInclude Include="Source\VM_Stack.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

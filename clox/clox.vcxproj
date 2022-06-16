@@ -139,7 +139,7 @@
     <ClCompile Include="Source\Debug.c" />
     <ClCompile Include="Source\Main.c" />
     <ClCompile Include="Source\Memory.c" />
-    <ClCompile Include="Source\Stack.c" />
+    <ClCompile Include="Source\VM_Stack.c" />
     <ClCompile Include="Source\Value.c" />
     <ClCompile Include="Source\VM.c" />
   </ItemGroup>
@@ -148,7 +148,7 @@
     <ClInclude Include="Source\Common.h" />
     <ClInclude Include="Source\Debug.h" />
     <ClInclude Include="Source\Memory.h" />
-    <ClInclude Include="Source\Stack.h" />
+    <ClInclude Include="Source\VM_Stack.h" />
     <ClInclude Include="Source\Value.h" />
     <ClInclude Include="Source\VM.h" />
   </ItemGroup>

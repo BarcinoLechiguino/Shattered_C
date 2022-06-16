@@ -19,7 +19,7 @@ void WriteValueArray(ValueArray* valArray, Value value)
 {
 	if (valArray->capacity < valArray->count + 1)
 	{
-		int oldCapacity = valArray->capacity;
+		int oldCapacity		= valArray->capacity;
 		valArray->capacity	= GROW_CAPACITY(oldCapacity);
 		valArray->values	= GROW_ARRAY(Value, valArray->values, oldCapacity, valArray->capacity));		// Why does it need the second ')' at the end?
 	}

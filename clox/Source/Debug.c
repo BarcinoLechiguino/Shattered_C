@@ -18,7 +18,7 @@ int DisassembleInstruction(Chunk* chunk, int offset)
 {
 	printf("%04d ", offset);
 
-	if (offset > 0 && chunk->lines[offset] == chunk->lines[offset - 1])
+	if (offset > 0 && (chunk->lines[offset] == chunk->lines[offset - 1]))
 	{
 		printf("   | ");
 	}
@@ -54,14 +54,14 @@ static int ConstantInstruction(const char* name, Chunk* chunk, int offset)
 }
 
 static int ConstantLongInstruction(const char* name, Chunk* chunk, int offset)
-{
-	int constantIdx = chunk->code[offset + 1];														// Getting the index of the constant in the chunk's constants ValueArray.
+{	
+	uint32_t constantIdx = ((uint32_t*)(chunk->code))[offset + 1];									// Getting the index of the constant in the chunk's constants ValueArray.
 
 	printf("%-16s %4d '", name, constantIdx);
 	PrintValue(chunk->constants.values[constantIdx]);												// Getting the actual value with the constantIdx.
 	printf("'\n");
 
-	return (offset + 4);																			// +4 since there are 4 bytes assigned to the OP_CONSTANT_LONG operation.
+	return (offset + 5);																			// +5 since there are 5 bytes assigned to the OP_CONSTANT_LONG operation.
 }
 
 static int SimpleInstruction(const char* name, int offset)

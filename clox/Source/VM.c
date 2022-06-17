@@ -44,13 +44,13 @@ static InterpretResult Run(VM* vm)
 			{
 				printf("[ "); PrintValue(*slot); printf(" ]");
 			}
-
+			
 			if (vm->stack.top == vm->stack.elements)
 			{
 				printf("[ EMPTY STACK ]");
 			}
 			printf("\n");
-
+			
 			DisassembleInstruction(vm->chunk, (int)(vm->ip - vm->chunk->code));
 		#endif
 
@@ -58,7 +58,7 @@ static InterpretResult Run(VM* vm)
 		switch (instruction = READ_BYTE())
 		{
 		case OP_CONSTANT:		{ Push(&vm->stack, READ_CONSTANT());}								break;
-		case OP_CONSTANT_LONG:	{ Push(&vm->stack, READ_CONSTANT());}								break;
+		case OP_CONSTANT_LONG:	{ Push(&vm->stack, READ_CONSTANT()); vm->ip += 3; }					break;
 		case OP_ADD:			{ BINARY_OP(+); }													break;
 		case OP_SUBTRACT:		{ BINARY_OP(-); }													break;
 		case OP_MULTIPLY:		{ BINARY_OP(*); }													break;

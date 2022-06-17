@@ -27,11 +27,12 @@ typedef struct
 	ValueArray	constants;							// Constant values.
 } Chunk;
 
-void InitChunk	(Chunk* chunk);
-void FreeChunk	(Chunk* chunk);
-void WriteChunk	(Chunk* chunk, uint8_t byte, int line);
+void InitChunk		(Chunk* chunk);
+void FreeChunk		(Chunk* chunk);
+void WriteChunk		(Chunk* chunk, uint8_t byte, int line);
+void WriteChunkLong	(Chunk* chunk, uint32_t bytes, int line);
 
-void WriteConstant(Chunk* chunk, Value value, int line);
-int  AddConstant(Chunk* chunk, Value value);
+void WriteConstant	(Chunk* chunk, Value value, int line);
+int  AddConstant	(Chunk* chunk, Value value);
 
 #endif // !__CLOX_CHUNK_H__

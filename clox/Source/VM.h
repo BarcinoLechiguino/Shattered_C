@@ -4,12 +4,10 @@
 #include "Chunk.h"
 #include "VM_Stack.h"
 
-#define STACK_MAX 256
-
 typedef struct
 {
-	Chunk*	 chunk;											// Chunk being currently executed by the Virtual Machine.
-	uint8_t* ip;											// Cursor that keeps track of where in the bytecode the VM is while it is executing the instructions.
+	Chunk*	 chunk;													// Chunk being currently executed by the Virtual Machine.
+	uint8_t* ip;													// Cursor that keeps track of where in the bytecode the VM is while it is executing the instructions.
 	VM_Stack stack;
 } VM;
 

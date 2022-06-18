@@ -24,4 +24,6 @@ void		FreeVM		(VM* vm);
 InterpretResult			Interpret	(VM* vm, Chunk* chunk);
 static InterpretResult	Run			(VM* vm);
 
+void DebugTraceExecution(VM* vm);
+
 #endif // !__CLOX_VM_H__

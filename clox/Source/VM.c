@@ -26,7 +26,7 @@ InterpretResult Interpret(VM* vm, Chunk* chunk)
 
 static InterpretResult Run(VM* vm)
 {
-	#define READ_BYTE()		(*vm->ip++)																// Ex: Returns instruction 0 and increases cursor to instruction 1.
+	#define READ_BYTE()		(*vm->ip++)																			// Ex: Returns instruction 0 and increases cursor to instruction 1.
 	#define READ_CONSTANT()	(vm->chunk->constants.values[READ_BYTE()])
 	#define BINARY_OP(op)				\
 		do								\
@@ -36,26 +36,14 @@ static InterpretResult Run(VM* vm)
 			Push(&vm->stack, (a op b));	\
 		} while (false)				
 
-	for (;;)																						// Infinite loop
+	for (;;)																									// Infinite loop
 	{
 		#ifdef DEBUG_TRACE_EXECUTION
-			printf("          ");
-			for (Value* slot = vm->stack.elements; slot < vm->stack.top; ++slot)
-			{
-				printf("[ "); PrintValue(*slot); printf(" ]");
-			}
-			
-			if (vm->stack.top == vm->stack.elements)
-			{
-				printf("[ EMPTY STACK ]");
-			}
-			printf("\n");
-			
-			DisassembleInstruction(vm->chunk, (int)(vm->ip - vm->chunk->code));
+			DebugTraceExecution(vm);
 		#endif
 
-		uint8_t instruction;
-		switch (instruction = READ_BYTE())
+		uint8_t instruction = READ_BYTE();
+		switch (instruction)
 		{
 		case OP_CONSTANT:		{ Push(&vm->stack, READ_CONSTANT());}								break;
 		case OP_CONSTANT_LONG:	{ Push(&vm->stack, READ_CONSTANT()); vm->ip += 3; }					break;
@@ -63,7 +51,7 @@ static InterpretResult Run(VM* vm)
 		case OP_SUBTRACT:		{ BINARY_OP(-); }													break;
 		case OP_MULTIPLY:		{ BINARY_OP(*); }													break;
 		case OP_DIVIDE:			{ BINARY_OP(/); }													break;
-		case OP_NEGATE:			{ NegateTop(&vm->stack); }											break; // Push(vm, -Pop(vm)); would also work, but it implies unnecessary operations.
+		case OP_NEGATE:			{ NegateTop(&vm->stack); }											break;		// Push(vm, -Pop(vm)); would also work, but it implies unnecessary operations.
 		case OP_RETURN:			{ PrintValue(Pop(&vm->stack)); printf("\n"); return INTERPRET_OK; }	break;
 		}
 	}
@@ -71,4 +59,21 @@ static InterpretResult Run(VM* vm)
 	#undef READ_BYTE
 	#undef READ_CONSTANT
 	#undef BINARY_OP
+}
+
+void DebugTraceExecution(VM* vm)
+{
+	printf("          ");
+	for (Value* slot = vm->stack.elements; slot < vm->stack.top; ++slot)
+	{
+		printf("[ "); PrintValue(*slot); printf(" ]");
+	}
+
+	if (vm->stack.top == vm->stack.elements)
+	{
+		printf("[ EMPTY STACK ]");
+	}
+	printf("\n");
+
+	DisassembleInstruction(vm->chunk, (int)(vm->ip - vm->chunk->code));
 }

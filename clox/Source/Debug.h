@@ -11,4 +11,6 @@ static int ConstantLongInstruction	(const char* name, Chunk* chunk, int offset);
 static int SimpleInstruction		(const char* name, int offset);
 static int DefaultInstruction		(uint8_t instruction, int offset);
 
+void PrintInstructionLine(Chunk* chunk, int offset);
+
 #endif // !__CLOX_DEBUG_H__

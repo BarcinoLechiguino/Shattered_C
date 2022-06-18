@@ -16,10 +16,10 @@ void FreeStack(VM_Stack* stack)
 	InitStack(stack);
 }
 
-/*static void ResetStack(VM_Stack* stack)
+static void ResetStack(VM_Stack* stack)
 {
 	stack->top = stack->elements;
-}*/
+}
 
 void Push(VM_Stack* stack, Value value)
 {

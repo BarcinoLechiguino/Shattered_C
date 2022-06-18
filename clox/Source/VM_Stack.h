@@ -14,7 +14,8 @@ typedef struct
 
 void		InitStack	(VM_Stack* stack);
 void		FreeStack	(VM_Stack* stack);
-//static void	ResetStack	(VM_Stack* stack);
+static void	ResetStack	(VM_Stack* stack);
+
 void		Push		(VM_Stack* stack, Value value);
 Value		Pop			(VM_Stack* stack);
 void		NegateTop	(VM_Stack* stack);

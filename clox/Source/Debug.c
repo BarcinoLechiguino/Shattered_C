@@ -18,14 +18,7 @@ int DisassembleInstruction(Chunk* chunk, int offset)
 {
 	printf("%04d ", offset);
 
-	if (offset > 0 && (chunk->lines[offset] == chunk->lines[offset - 1]))
-	{
-		printf("   | ");
-	}
-	else
-	{
-		printf("%4d ", chunk->lines[offset]);
-	}
+	PrintInstructionLine(chunk, offset);
 
 	uint8_t instruction = chunk->code[offset];
 	switch (instruction)
@@ -74,4 +67,16 @@ static int DefaultInstruction(uint8_t instruction, int offset)
 {
 	printf("Unknown OP_CODE: %d\n", instruction);
 	return (offset + 1);
+}
+
+void PrintInstructionLine(Chunk* chunk, int offset)
+{
+	if (offset > 0 && (chunk->lines[offset] == chunk->lines[offset - 1]))
+	{
+		printf("   | ");
+	}
+	else
+	{
+		printf("%4d ", chunk->lines[offset]);
+	}
 }

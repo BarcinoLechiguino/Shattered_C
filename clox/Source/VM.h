@@ -18,10 +18,10 @@ typedef enum
 	INTERPRET_RUNTIME_ERROR
 } InterpretResult;
 
-void		InitVM		(VM* vm);
-void		FreeVM		(VM* vm);
+void InitVM(VM* vm);
+void FreeVM(VM* vm);
 
-InterpretResult			Interpret	(VM* vm, Chunk* chunk);
+InterpretResult			Interpret	(const char* source);
 static InterpretResult	Run			(VM* vm);
 
 void DebugTraceExecution(VM* vm);

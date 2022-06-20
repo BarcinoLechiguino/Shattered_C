@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 #include "Common.h"
+#include "Compiler.h"
 #include "Debug.h"
 
 #include "VM.h"
@@ -16,12 +17,10 @@ void FreeVM(VM* vm)
 	FreeStack(&vm->stack);
 }
 
-InterpretResult Interpret(VM* vm, Chunk* chunk)
+InterpretResult Interpret(const char* source)
 {
-	vm->chunk	= chunk;
-	vm->ip		= vm->chunk->code;
-
-	return Run(vm);
+	Compile(source);
+	return INTERPRET_OK;
 }
 
 static InterpretResult Run(VM* vm)

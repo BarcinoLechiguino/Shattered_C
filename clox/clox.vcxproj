@@ -71,12 +71,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>.\Build</OutDir>
-    <IntDir>.\Intermediate</IntDir>
+    <OutDir>.\Build\</OutDir>
+    <IntDir>.\Intermediate\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>.\Build</OutDir>
-    <IntDir>.\Intermediate</IntDir>
+    <OutDir>.\Build\</OutDir>
+    <IntDir>.\Intermediate\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -110,7 +110,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -124,7 +124,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -136,9 +136,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\Chunk.c" />
+    <ClCompile Include="Source\Compiler.c" />
     <ClCompile Include="Source\Debug.c" />
     <ClCompile Include="Source\Main.c" />
     <ClCompile Include="Source\Memory.c" />
+    <ClCompile Include="Source\Scanner.c" />
     <ClCompile Include="Source\VM_Stack.c" />
     <ClCompile Include="Source\Value.c" />
     <ClCompile Include="Source\VM.c" />
@@ -146,8 +148,10 @@
   <ItemGroup>
     <ClInclude Include="Source\Chunk.h" />
     <ClInclude Include="Source\Common.h" />
+    <ClInclude Include="Source\Compiler.h" />
     <ClInclude Include="Source\Debug.h" />
     <ClInclude Include="Source\Memory.h" />
+    <ClInclude Include="Source\Scanner.h" />
     <ClInclude Include="Source\VM_Stack.h" />
     <ClInclude Include="Source\Value.h" />
     <ClInclude Include="Source\VM.h" />

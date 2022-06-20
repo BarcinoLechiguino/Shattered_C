@@ -1,45 +1,96 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 #include "Common.h"
 #include "Chunk.h"
 #include "Debug.h"
 #include "VM.h"
 
-#include "Memory.h"
+static void ReportError(const char* errorString, const char* filePath, int errorID)
+{
+	fprintf(stderr, errorString, filePath);
+	exit(errorID);
+}
+
+static void REPL()
+{
+	char line[1024];
+	for (;;)
+	{
+		printf("> ");
+	
+		if (!fgets(line, sizeof(line), stdin))											// Checks all the line's chars and breaks the loop if a non-valid char is found.
+		{
+			printf("\n");
+			break;
+		}
+	
+		Interpret(line);
+	}
+}
+
+static char* ReadFile(const char* path)
+{
+	FILE* file = fopen(path, "rb");														// Opens the file with the given path. Mode is set to 
+	if (file == NULL)																	// Failure ocurrs when the file does not exist or the user does not have access to it.
+	{
+		ReportError("Could not open file \"%s\".\n", path, 74);							// Exit code 74: An error ocurred while doing I/O on some file.
+	}
+
+	fseek(file, 0L, SEEK_END);															// Sets the cursor to the end of the file.
+	size_t fileSize = ftell(file);														// Returns how many bytes the cursor is from the file's start.
+	rewind(file);																		// Sets the cursor to the beginning of the file.
+
+	char* buffer = (char*)malloc(fileSize + 1);											// Allocates a buffer with the size required by the file.
+	if (buffer == NULL)
+	{
+		ReportError("Not enough memory to read file \"%s\".\n", path, 74);
+	}
+
+	size_t bytesRead = fread(buffer, sizeof(char), fileSize, file);						// Stores all the bytes in the file into the buffer.
+	if (bytesRead < fileSize)
+	{
+		ReportError("Could not read file \"%s\".\n", path, 74);
+	}
+
+	buffer[bytesRead]	= '\0';															// Adds a null byte to the end of the buffer.
+
+	fclose(file);																		// Frees the stream from memory.
+	return buffer;
+}
+
+static void RunFile(const char* path)
+{
+	char*			source = ReadFile(path);
+	InterpretResult result = Interpret(source);
+	free(source);
+	
+	if (result == INTERPRET_COMPILE_ERROR) { exit(65); }								// Exit code 65: The input data was incorrect in some way.
+	if (result == INTERPRET_RUNTIME_ERROR) { exit(70); }								// Exit code 70: An internal software error has been detected.
+}
 
 int main(int argc, const char* argv[])
-{
+{	
 	VM vm;
-	Chunk chunk;
 	
 	InitVM(&vm);
-	InitChunk(&chunk);
-
-	//for (int i = 0; i < 300; ++i)
-	//{
-	//	WriteConstant(&chunk, i, 123);
-	//}
-
-	// a + (b * c) - (d / (-e))
-	WriteConstant(&chunk, 1, 123);
 	
-	WriteConstant(&chunk, 2, 123);
-	WriteConstant(&chunk, 3, 123);
-	WriteChunk(&chunk, OP_MULTIPLY, 123);
+	if (argc == 1)																		// Checking for 1/2 instead of 0/1 as argv[0] is the name of the executable.
+	{
+		REPL();
+	}
+	else if (argc == 2)
+	{
+		RunFile(argv[1]);
+	}
+	else
+	{
+		fprintf(stderr, "Usage: clox [path]\n");
+		exit(64);
+	}
 	
-	WriteConstant(&chunk, 4, 123);
-	WriteConstant(&chunk, 5, 123);
-	WriteChunk(&chunk, OP_NEGATE, 123);
-	WriteChunk(&chunk, OP_DIVIDE, 123);
-	
-	WriteChunk(&chunk, OP_SUBTRACT, 123);
-	WriteChunk(&chunk, OP_ADD, 123);
-	
-	WriteChunk(&chunk, OP_RETURN, 123);									// Writting a Return operation
-
-	//DisassembleChunk(&chunk, "test_chunk");
-	Interpret(&vm, &chunk);
-
 	FreeVM(&vm);
-	FreeChunk(&chunk);
 
 	return 0;
 }

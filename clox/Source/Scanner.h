@@ -47,7 +47,7 @@ void  InitScanner	(const char* source);
 bool  IsAtEnd		();
 bool  IsDigit		(char c);
 bool  IsAlpha		(char c);
-bool  IsAlphaNumeric(char c);
+bool  IsAlphanumeric(char c);
 
 char  Advance		();
 char  Peek			();

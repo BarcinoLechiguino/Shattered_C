@@ -29,7 +29,7 @@ bool IsAlpha(char c)
 			(c == '_'));
 }
 
-bool IsAlphaNumeric(char c)
+bool IsAlphanumeric(char c)
 {
 	return (IsDigit(c) || IsAlpha(c));
 }
@@ -95,10 +95,7 @@ Token ScanToken()
 	
 	scanner.start = scanner.current;
 
-	if (IsAtEnd())
-	{
-		return MakeToken(TOKEN_EOF);
-	}
+	if (IsAtEnd())	{ return MakeToken(TOKEN_EOF); }
 
 	char c = Advance();
 
@@ -189,7 +186,7 @@ Token Number()
 
 Token Identifier()
 {
-	while (IsAlphaNumeric(Peek()))										// After the first letter numbers are also accepted as part of an identifier. Ex: f4rs1ght
+	while (IsAlphanumeric(Peek()))										// After the first letter numbers are also accepted as part of an identifier. Ex: f4rs1ght
 	{
 		Advance();
 	}

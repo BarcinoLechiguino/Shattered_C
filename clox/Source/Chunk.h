@@ -32,7 +32,7 @@ void FreeChunk		(Chunk* chunk);
 void WriteChunk		(Chunk* chunk, uint8_t byte, int line);
 void WriteChunkLong	(Chunk* chunk, uint32_t bytes, int line);
 
-void WriteConstant	(Chunk* chunk, Value value, int line);
+bool WriteConstant	(Chunk* chunk, Value value, int line);
 int  AddConstant	(Chunk* chunk, Value value);
 
 #endif // !__CLOX_CHUNK_H__

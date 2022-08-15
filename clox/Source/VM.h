@@ -21,7 +21,7 @@ typedef enum
 void InitVM(VM* vm);
 void FreeVM(VM* vm);
 
-InterpretResult			Interpret	(const char* source);
+InterpretResult			Interpret	(VM* vm, const char* source);
 static InterpretResult	Run			(VM* vm);
 
 void DebugTraceExecution(VM* vm);

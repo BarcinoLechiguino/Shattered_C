@@ -56,18 +56,21 @@ void WriteChunkLong(Chunk* chunk, uint32_t bytes, int line)
 	chunk->count += 4;
 }
 
-void WriteConstant(Chunk* chunk, Value value, int line)
+bool WriteConstant(Chunk* chunk, Value value, int line)
 {
 	int constantIdx	= AddConstant(chunk, value);													// Adding the constant to the chunk's constants array.
-	if (constantIdx < 256)
+	if (constantIdx < UINT8_MAX)
 	{
-		WriteChunk(chunk, OP_CONSTANT, 123);														// Writting a constant operation.
-		WriteChunk(chunk, constantIdx, 123);														// Writting the contant's index in the chunk's code stream.
+		WriteChunk(chunk, OP_CONSTANT, line);														// Writting a constant operation.
+		WriteChunk(chunk, constantIdx, line);														// Writting the contant's index in the chunk's code stream.
+		return true;
 	}
 	else
 	{	
-		WriteChunk(chunk, OP_CONSTANT_LONG, 123);													// REVISE IN THE FUTURE
-		WriteChunkLong(chunk, constantIdx, 123);
+		//WriteChunk(chunk, OP_CONSTANT_LONG, line);													// REVISE IN THE FUTURE
+		//WriteChunkLong(chunk, constantIdx, line);													// CHECK OP_CONSTANT_16 AND P.306
+		fprintf(stderr, "Too many constants in one chunk. [CHUNK]");
+		return false;
 	}
 }
 

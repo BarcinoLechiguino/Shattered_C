@@ -12,6 +12,8 @@ void DisassembleChunk(Chunk* chunk, const char* name)
 	{
 		offset = DisassembleInstruction(chunk, offset);
 	}
+
+	printf("== %s ==\n", name);
 }
 
 int DisassembleInstruction(Chunk* chunk, int offset)

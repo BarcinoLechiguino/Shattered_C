@@ -99,8 +99,8 @@ Token ScanToken()
 
 	char c = Advance();
 
-	if (IsAlpha(c)) { return Identifier(); }
-	if (IsDigit(c)) { return Number(); }
+	if (IsAlpha(c)) { return ScanIdentifier(); }
+	if (IsDigit(c)) { return ScanNumber(); }
 
 	switch (c)
 	{
@@ -121,7 +121,7 @@ Token ScanToken()
 	case '<': { return MakeToken((Match('=')) ? TOKEN_LESS			: TOKEN_LESS_EQUAL); }
 	case '>': { return MakeToken((Match('=')) ? TOKEN_GREATER_EQUAL	: TOKEN_GREATER); }
 	
-	case '"': { return String(); }
+	case '"': { return ScanString(); }
 	}
 
 	return ErrorToken("Unexpected character.");
@@ -149,7 +149,7 @@ Token ErrorToken(const char* message)
 	return token;
 }
 
-Token String()
+Token ScanString()
 {	
 	while ((Peek() != '"') && !IsAtEnd())								// While current character is not closing quote or null byte.
 	{
@@ -164,7 +164,7 @@ Token String()
 	return MakeToken(TOKEN_STRING);
 }
 
-Token Number()
+Token ScanNumber()
 {
 	while (IsDigit(Peek()))												// Scanning until all digits have been scanned.
 	{
@@ -184,7 +184,7 @@ Token Number()
 	return MakeToken(TOKEN_NUMBER);
 }
 
-Token Identifier()
+Token ScanIdentifier()
 {
 	while (IsAlphanumeric(Peek()))										// After the first letter numbers are also accepted as part of an identifier. Ex: f4rs1ght
 	{

@@ -17,10 +17,24 @@ void FreeVM(VM* vm)
 	FreeStack(&vm->stack);
 }
 
-InterpretResult Interpret(const char* source)
+InterpretResult Interpret(VM* vm, const char* source)
 {
-	Compile(source);
-	return INTERPRET_OK;
+	Chunk chunk;
+	InitChunk(&chunk);
+
+	if (!Compile(source, &chunk))
+	{
+		FreeChunk(&chunk);
+		return INTERPRET_COMPILE_ERROR;
+	}
+
+	vm->chunk	= &chunk;
+	vm->ip		= vm->chunk->code;
+
+	InterpretResult result = Run(vm);
+
+	FreeChunk(&chunk);
+	return result;
 }
 
 static InterpretResult Run(VM* vm)
@@ -34,6 +48,10 @@ static InterpretResult Run(VM* vm)
 			double a = Pop(&vm->stack);	\
 			Push(&vm->stack, (a op b));	\
 		} while (false)				
+
+	#ifdef DEBUG_TRACE_EXECUTION
+		printf("== Traced Execution ==\n");
+	#endif
 
 	for (;;)																									// Infinite loop
 	{

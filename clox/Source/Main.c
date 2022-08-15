@@ -13,7 +13,7 @@ static void ReportError(const char* errorString, const char* filePath, int error
 	exit(errorID);
 }
 
-static void REPL()
+static void REPL(VM* vm)
 {
 	char line[1024];
 	for (;;)
@@ -26,7 +26,7 @@ static void REPL()
 			break;
 		}
 	
-		Interpret(line);
+		Interpret(vm, line);
 	}
 }
 
@@ -36,6 +36,7 @@ static char* ReadFile(const char* path)
 	if (file == NULL)																	// Failure ocurrs when the file does not exist or the user does not have access to it.
 	{
 		ReportError("Could not open file \"%s\".\n", path, 74);							// Exit code 74: An error ocurred while doing I/O on some file.
+		return NULL;
 	}
 
 	fseek(file, 0L, SEEK_END);															// Sets the cursor to the end of the file.
@@ -46,12 +47,14 @@ static char* ReadFile(const char* path)
 	if (buffer == NULL)
 	{
 		ReportError("Not enough memory to read file \"%s\".\n", path, 74);
+		return NULL;
 	}
 
 	size_t bytesRead = fread(buffer, sizeof(char), fileSize, file);						// Stores all the bytes in the file into the buffer.
 	if (bytesRead < fileSize)
 	{
 		ReportError("Could not read file \"%s\".\n", path, 74);
+		return NULL;
 	}
 
 	buffer[bytesRead]	= '\0';															// Adds a null byte to the end of the buffer.
@@ -60,10 +63,10 @@ static char* ReadFile(const char* path)
 	return buffer;
 }
 
-static void RunFile(const char* path)
+static void RunFile(VM* vm, const char* path)
 {
 	char*			source = ReadFile(path);
-	InterpretResult result = Interpret(source);
+	InterpretResult result = Interpret(vm, source);
 	free(source);
 	
 	if (result == INTERPRET_COMPILE_ERROR) { exit(65); }								// Exit code 65: The input data was incorrect in some way.
@@ -73,16 +76,15 @@ static void RunFile(const char* path)
 int main(int argc, const char* argv[])
 {	
 	VM vm;
-	
 	InitVM(&vm);
 	
 	if (argc == 1)																		// Checking for 1/2 instead of 0/1 as argv[0] is the name of the executable.
 	{
-		REPL();
+		REPL(&vm);
 	}
 	else if (argc == 2)
 	{
-		RunFile(argv[1]);
+		RunFile(&vm, argv[1]);
 	}
 	else
 	{
